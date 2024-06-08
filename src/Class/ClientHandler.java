@@ -1,25 +1,36 @@
+package Class;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ClientHandler implements Runnable {
 
+    public enum ClientType {PROPOSER, ACCEPTOR, LEARNER}
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUsername;
-    private String clientType;
+    private String  clientType;
 
-    public ClientHandler(Socket socket) {
+
+    public ClientHandler(Socket socket, String clientType) {
         try {
+
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.clientUsername = bufferedReader.readLine();
             clientHandlers.add(this);
 
-            broadcastMessage("Server: " + clientUsername + " entered the chat!");
+
+
+
+            broadcastMessage("Server: A " + clientUsername + " entered the chat!");
+            broadcastMessage("SERVER: " + clientType + " entered the chat!");
+
         } catch (IOException e) {
             closeEverything(socket, bufferedWriter, bufferedReader);
         }

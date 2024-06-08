@@ -1,6 +1,9 @@
+package Class;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server {
     private ServerSocket serverSocket;
@@ -15,8 +18,12 @@ public class Server {
             while(!serverSocket.isClosed()) {
 
                 Socket socket = serverSocket.accept();
-                System.out.println("A new Client has arrived");
-                ClientHandler clientHandler = new ClientHandler(socket);
+                Scanner scanner = new Scanner(socket.getInputStream());
+                String username = scanner.nextLine();
+                String role = scanner.nextLine();
+
+                System.out.println( role +" "+ username + " has arrived");
+                ClientHandler clientHandler = new ClientHandler(socket, role);
 
                 Thread thread = new Thread(clientHandler);
                 thread.start();

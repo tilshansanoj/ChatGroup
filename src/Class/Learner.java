@@ -1,12 +1,14 @@
+package Class;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Acceptor extends Client{
+public class Learner extends Client{
 
-    public Acceptor(Socket socket, String username) {
+    public Learner(Socket socket, String username) {
         super(socket, username);
-        this.type = ClientType.ACCEPTOR;
+        this.type = ClientType.LEARNER;
     }
     public static void main(String[] args) throws IOException {
 
@@ -15,10 +17,10 @@ public class Acceptor extends Client{
         String username = scanner.nextLine();
 
         Socket socket = new Socket("localhost", 1234);
-        Acceptor acceptor = new Acceptor(socket, username);
+        Learner learner = new Learner(socket, username);
 
-        acceptor.listenForMessage();
-        acceptor.sendMessage();
+        learner.listenForMessage();
+        learner.sendMessage();
 
     }
 }
